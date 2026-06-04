@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="student1" class="org.example.Entity.Student">
+        <property name="id" value="117"/>
+        <property name="name" value="Aradhana"/>
+        <property name="university">
+            <bean id="univ" class="org.example.Entity.University">
+                <property name="uname" value="CUTM"/>
+                <property name="ccode" value="CUTM Odisha"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="collegeInfo" class="org.example.Entity.University">
+        <property name="uname" value="Centurion University(CUTM)"/>
+        <property name="ccode" value="CUTM Odisha"/>
+    </bean>
+
+    <bean id="student2" class="org.example.Entity.Student">
+        <property name="id" value="145"/>
+        <property name="name" value="Rahul"/>
+        <property name="university" ref="collegeInfo"/>
+    </bean>
+
+    <bean id="student3" class="org.example.Entity.Student">
+        <property name="id" value="193"/>
+        <property name="name" value="Raju"/>
+        <property name="university" ref="collegeInfo"/>
+    </bean>
+</beans>
