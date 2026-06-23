@@ -24,4 +24,17 @@ public class BookingController {
     public List<Booking> getMyBookings(Authentication authentication) {
         return bookingService.getMyBookings(authentication.getName());
     }
+
+    @GetMapping("/pharmacy")
+    public List<Booking> getPharmacyBookings(Authentication authentication) {
+        return bookingService.getPharmacyBookings(authentication.getName());
+    }
+
+    @PutMapping("/{id}/status")
+    public Booking updateBookingStatus(
+            @PathVariable Long id,
+            @RequestParam String status,
+            Authentication authentication) {
+        return bookingService.updateBookingStatus(id, status, authentication.getName());
+    }
 }

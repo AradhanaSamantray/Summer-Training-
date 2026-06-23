@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MedicineSearchResponse {
 
+    private Long inventoryId;
+
     private String pharmacyName;
 
     private String medicineName;
@@ -20,5 +22,9 @@ public class MedicineSearchResponse {
     private String address;
 
     private String contact;
+
+    private Double latitude;
+
+    private Double longitude;
 
 }

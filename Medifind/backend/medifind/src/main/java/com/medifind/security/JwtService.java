@@ -21,12 +21,14 @@ public class JwtService {
 
     public String generateToken(
             String email,
-            String role
+            String role,
+            String name
     ) {
 
         return Jwts.builder()
                 .subject(email)
                 .claim("role", role)
+                .claim("name", name)
                 .issuedAt(new Date())
                 .expiration(
                         new Date(

@@ -29,6 +29,21 @@ public class PharmacyService {
         return pharmacyRepository.findAll();
     }
 
+    public List<Pharmacy> getApprovedPharmacies() {
+        return pharmacyRepository.findByApprovedTrue();
+    }
+
+    public Pharmacy getMyPharmacy(String email) {
+        User owner = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (owner.getPharmacy() == null) {
+            throw new ResourceNotFoundException("No pharmacy registered for this account");
+        }
+
+        return owner.getPharmacy();
+    }
+
     public Pharmacy getPharmacyById(Long id) {
         return pharmacyRepository.findById(id)
                 .orElseThrow(() ->

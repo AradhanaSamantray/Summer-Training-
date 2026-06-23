@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface PharmacyRepository extends JpaRepository<Pharmacy,Long> {
     List<Pharmacy> findByApprovedFalse();
+    List<Pharmacy> findByApprovedTrue();
+    java.util.Optional<Pharmacy> findByOwnerEmail(String email);
 }

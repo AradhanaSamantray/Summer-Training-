@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -17,15 +18,24 @@ public class AdminController {
     private final AdminService adminService;
 
     @PutMapping("/pharmacy/{id}/approve")
-    public String approvePharmacy(@PathVariable Long id, Authentication authentication) {
-        /*System.out.println("CONTROLLER AUTH = " + authentication);
-        return adminService.approvePharmacy(id);*/
-        System.out.println("ADMIN ENDPOINT HIT");
-        return "Approved";
-    }
     @PreAuthorize("hasRole('ADMIN')")
+    public String approvePharmacy(@PathVariable Long id) {
+        return adminService.approvePharmacy(id);
+    }
     @GetMapping("/pharmacy/pending")
     public List<Pharmacy> getPendingPharmacies() {
+
         return adminService.getPendingPharmacies();
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/pharmacy/approved")
+    public List<Pharmacy> getApprovedPharmacies() {
+        return adminService.getApprovedPharmacies();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/stats")
+    public Map<String, Long> getStats() {
+        return adminService.getStats();
     }
 }

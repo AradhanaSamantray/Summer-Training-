@@ -61,18 +61,22 @@ public class InventoryService {
 
         Inventory inventory = getInventoryById(id);
 
-        Pharmacy pharmacy = pharmacyRepository
-                .findById(request.getPharmacyId())
-                .orElseThrow(() ->
-                        new RuntimeException("Pharmacy Not Found"));
+        if (request.getPharmacyId() != null) {
+            Pharmacy pharmacy = pharmacyRepository
+                    .findById(request.getPharmacyId())
+                    .orElseThrow(() ->
+                            new RuntimeException("Pharmacy Not Found"));
+            inventory.setPharmacy(pharmacy);
+        }
 
-        Medicine medicine = medicineRepository
-                .findById(request.getMedicineId())
-                .orElseThrow(() ->
-                        new RuntimeException("Medicine Not Found"));
+        if (request.getMedicineId() != null) {
+            Medicine medicine = medicineRepository
+                    .findById(request.getMedicineId())
+                    .orElseThrow(() ->
+                            new RuntimeException("Medicine Not Found"));
+            inventory.setMedicine(medicine);
+        }
 
-        inventory.setPharmacy(pharmacy);
-        inventory.setMedicine(medicine);
         inventory.setQuantity(request.getQuantity());
         inventory.setPrice(request.getPrice());
         inventory.setExpiryDate(request.getExpiryDate());
@@ -96,12 +100,15 @@ public class InventoryService {
         return inventoryList.stream()
                 .filter(i -> Boolean.TRUE.equals(i.getPharmacy().getApproved()))
                 .map(i -> new MedicineSearchResponse(
+                        i.getId(),
                         i.getPharmacy().getName(),
                         i.getMedicine().getName(),
                         i.getQuantity(),
                         i.getPrice(),
                         i.getPharmacy().getAddress(),
-                        i.getPharmacy().getContact()
+                        i.getPharmacy().getContact(),
+                        i.getPharmacy().getLatitude(),
+                        i.getPharmacy().getLongitude()
                         ))
                 .toList();
     }
